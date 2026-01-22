@@ -1,17 +1,27 @@
 # Python
 venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+.env
 
 # Testing
 .pytest_cache/
 reports/
-screenshots/
+htmlcov/
+.coverage
 
 # IDE
 .vscode/
-.DS_Store
+.idea/
+*.swp
+*.swo
 
-# Environment
-.env
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
 *.log

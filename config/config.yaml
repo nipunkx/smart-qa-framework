@@ -1,0 +1,72 @@
+# OpenCart Application Configuration
+# Update these values based on your Proxmox setup
+
+application:
+  # OpenCart URLs (update XX with your VM IP)
+  base_url: "http://192.168.50.103:8080"
+  admin_url: "http://192.168.50.103:8080/myadmin"
+  
+  # Application name
+  name: "OpenCart"
+
+# Selenium Configuration
+selenium:
+  # Browser choice: chrome, firefox, edge
+  browser: "chrome"
+  
+  # Run in headless mode? (true/false)
+  # headless = no browser window visible
+  headless: false
+  
+  # How long to wait for elements (seconds)
+  implicit_wait: 10
+  
+  # How long to wait for page load (seconds)
+  page_load_timeout: 30
+  
+  # Window size
+  window_width: 1920
+  window_height: 1080
+
+# Playwright Configuration
+playwright:
+  browser: "chromium"  # chromium, firefox, webkit
+  headless: false
+  slow_mo: 100  # Slow down actions by 100ms (helps with debugging)
+  screenshot_on_failure: true
+  video_on_failure: true
+  trace_on_failure: true
+  viewport:
+    width: 1920
+    height: 1080
+
+
+# Test Credentials
+credentials:
+  # Admin credentials (from OpenCart setup)
+  admin_username: "admin"
+  admin_password: "admin123"
+  
+  # Test customer account
+  customer_email: "test@example.com"
+  customer_password: "Test@123"
+
+# Test Configuration
+test_settings:
+  # Take screenshots on failure?
+  screenshot_on_failure: true
+  
+  # Screenshot folder
+  screenshot_folder: "reports/screenshots"
+  
+  # Test data folder
+  test_data_folder: "data/testdata"
+  
+  # Number of parallel tests
+  parallel_workers: 4
+
+# Proxmox Configuration (for future use)
+proxmox:
+  host: "192.168.50.15"
+  node: "proxmox-ve"
+  # Don't put password here! We'll use environment variables
