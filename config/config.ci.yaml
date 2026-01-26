@@ -1,8 +1,22 @@
-opencart:
+application:
   base_url: "https://demo.opencart.com"
   admin_url: "https://demo.opencart.com/admin"
 
-browser:
+selenium:
+  browser: "chrome"
   headless: true
-  slow_mo: 0
-  timeout: 30000
+  implicit_wait: 10
+  page_load_timeout: 30
+  window_width: 1920
+  window_height: 1080
+
+credentials:
+  admin_username: "demo"
+  admin_password: "demo"
+  customer_email: "test@example.com"
+  customer_password: "test123"
+
+test_settings:
+  screenshot_folder: "reports/screenshots"
+  screenshot_on_failure: true
+  parallel_workers: 1
