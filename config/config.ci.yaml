@@ -1,0 +1,8 @@
+opencart:
+  base_url: "https://demo.opencart.com"
+  admin_url: "https://demo.opencart.com/admin"
+
+browser:
+  headless: true
+  slow_mo: 0
+  timeout: 30000
