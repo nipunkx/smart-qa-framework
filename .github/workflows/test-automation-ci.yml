@@ -47,7 +47,7 @@ jobs:
     
     - name: Run tests
       run: |
-        pytest tests/frontend/playwright/ -v --html=reports/report.html --self-contained-html
+        pytest tests/frontend/pw/ -v --html=reports/report.html --self-contained-html
       continue-on-error: false
     
     - name: Upload test reports
