@@ -1,6 +1,6 @@
 application:
-  base_url: "https://demo.opencart.com"
-  admin_url: "https://demo.opencart.com/admin"
+  base_url: "https://tommie-bronchiectatic-unmathematically.ngrok-free.dev"
+  admin_url: "https://tommie-bronchiectatic-unmathematically.ngrok-free.dev/admin"
 
 selenium:
   browser: "chrome"
@@ -11,8 +11,8 @@ selenium:
   window_height: 1080
 
 credentials:
-  admin_username: "demo"
-  admin_password: "demo"
+  admin_username: "admin"
+  admin_password: "admin"
   customer_email: "test@example.com"
   customer_password: "test123"
 

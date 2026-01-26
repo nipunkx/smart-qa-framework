@@ -86,20 +86,35 @@ def customer_credentials():
 # ============== BROWSER CONFIGURATION ==============
 
 @pytest.fixture(scope="session")
-def browser_context_args(browser_context_args):
-    """
-    Configure browser context with:
-    - Video recording
-    - Viewport size
-    - Ignore HTTPS errors (for local testing)
-    """
-    return {
-        **browser_context_args,
-        "record_video_dir": "reports/videos/",
-        "record_video_size": {"width": 1280, "height": 720},
-        "viewport": {"width": 1920, "height": 1080},
-        "ignore_https_errors": True,
-    }
+def browser_context(browser):
+    """Create browser context with authentication for ngrok"""
+    import os
+    
+    # Check if we're in CI and need basic auth for ngrok
+    ngrok_user = os.getenv('NGROK_USER')
+    ngrok_pass = os.getenv('NGROK_PASS')
+    
+    if ngrok_user and ngrok_pass:
+        # CI environment with ngrok basic auth
+        context = browser.new_context(
+            http_credentials={
+                'username': ngrok_user,
+                'password': ngrok_pass
+            }
+        )
+    else:
+        # Local environment without auth
+        context = browser.new_context()
+    
+    yield context
+    context.close()
+
+@pytest.fixture
+def page(browser_context):
+    """Create a new page for each test"""
+    page = browser_context.new_page()
+    yield page
+    page.close()
 
 
 # ============== PAGE OBJECT FIXTURES ==============
