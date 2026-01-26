@@ -28,9 +28,26 @@ class BasePage:
     # ============== NAVIGATION ==============
     
     def navigate(self, url: str) -> None:
-        """Navigate to a URL and wait for load"""
+        """
+        Navigate to a URL with ngrok interstitial handling
+        
+        Args:
+            url: The URL to navigate to
+        """
         logger.info(f"Navigating to: {url}")
-        self.page.goto(url, wait_until="networkidle")
+        self.page.goto(url, wait_until="load", timeout=60000)
+        
+        # Handle ngrok free tier interstitial page
+        try:
+            if "ngrok-free.dev" in self.page.url:
+                # Wait for and click "Visit Site" button
+                visit_button = self.page.locator("button:has-text('Visit Site')")
+                if visit_button.is_visible(timeout=3000):
+                    logger.info("Clicking through ngrok interstitial page")
+                    visit_button.click()
+                    self.page.wait_for_load_state("networkidle", timeout=30000)
+        except Exception as e:
+            logger.debug(f"No ngrok interstitial or already past it: {e}")
     
     def refresh(self) -> None:
         """Refresh current page"""
