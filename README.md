@@ -407,11 +407,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Pat Xavier** - Senior QA Automation Engineer
+**Nipun Xavier** - Senior QA Automation Engineer
 
 - **Experience**: 17+ years in software testing and automation
 - **Expertise**: Full-stack test automation, DevOps, CI/CD
-- **Focus**: German tech market positioning
+- **Focus**: Leading tech market positioning
 
 ---
 
@@ -433,7 +433,7 @@ This framework was built to demonstrate:
 ✅ **Self-hosted infrastructure** knowledge  
 ✅ **Professional documentation** and communication
 
-**Target Audience**: German tech companies seeking senior test automation engineers with comprehensive skill sets.
+**Target Audience**: Tech companies seeking senior test automation engineers with comprehensive skill sets.
 
 ---
 
