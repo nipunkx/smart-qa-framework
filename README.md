@@ -1,310 +1,401 @@
-# 🚀 Smart QA Framework
+# 🚀 Test Automation Framework
 
-> **Cloud-Native Test Automation Framework** built with Playwright, Python, and self-hosted Proxmox infrastructure
-
-[![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Playwright](https://img.shields.io/badge/playwright-1.40+-green.svg)](https://playwright.dev/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+A comprehensive, production-ready test automation framework demonstrating full-stack QA capabilities for e-commerce applications. Built with modern best practices and designed for scalability.
 
 ---
 
-## 📋 Overview
+## 📋 Table of Contents
 
-Professional-grade test automation framework demonstrating modern QA engineering practices with **cloud-based infrastructure deployment**. Built on enterprise-grade Proxmox virtualization platform, this framework showcases end-to-end automation capabilities suitable for European tech companies requiring robust, scalable testing solutions.
-
-**Key Differentiators:**
-- 🏗️ **Self-Hosted Infrastructure** - Complete Proxmox-based cloud environment
-- 🎯 **Production-Ready Architecture** - 3-layer design pattern with separation of concerns
-- 🔄 **Multi-Framework Support** - Shared locators for Playwright & Selenium integration
-- 📊 **Enterprise Reporting** - Timestamped HTML reports with screenshots and video
-- 🌍 **GDPR-Compliant** - Data remains in European infrastructure
-- ⚡ **CI/CD Ready** - Designed for Jenkins integration and parallel execution
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Quick Start](#quick-start)
+- [Test Execution](#test-execution)
+- [CI/CD Integration](#cicd-integration)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## 🏛️ Architecture
+## 🎯 Overview
+
+This framework demonstrates enterprise-level test automation skills through:
+
+- **Full-Stack Testing**: Frontend (UI) + Backend (API) test coverage
+- **Production Architecture**: Page Object Model, fixtures, clean separation of concerns
+- **Self-Hosted Infrastructure**: No external dependencies, complete control
+- **Real Application Testing**: OpenCart e-commerce platform
+- **Professional Practices**: Git workflow, documentation, maintainable code
+
+**Current Test Coverage:**
+- ✅ **26 automated tests** (15 UI + 11 API)
+- ✅ **100% passing** rate
+- ✅ **Comprehensive reporting** with screenshots and videos
+
+---
+
+## 🏗️ Architecture
+
+### High-Level Design
 
 ```
-smart-qa-framework/
-│
-├── config/                 # Environment and test configuration
-│   └── config.yaml        # Centralized config management
-│
-├── locators/              # Shared locators (framework-agnostic)
-│   └── opencart_locators.py
-│
-├── pages/                 # Page Object Model
-│   └── pw/               # Playwright-specific implementations
-│       ├── base_page.py
-│       ├── home_page.py
-│       └── login_page.py
-│
-├── tests/                 # Test suites
-│   └── frontend/
-│       └── playwright/   # Playwright UI tests
-│           ├── test_homepage.py
-│           └── test_login.py
-│
-├── utils/                 # Helper utilities
-│   ├── config_loader.py
-│   └── logger.py
-│
-└── reports/              # Test artifacts
-    ├── html/            # HTML reports
-    ├── screenshots/     # Failure screenshots
-    └── videos/          # Test execution recordings
+┌─────────────────────────────────────────────────────────────────┐
+│                     Test Automation Framework                    │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  ┌──────────────────┐              ┌──────────────────┐        │
+│  │  Frontend Tests  │              │  Backend Tests   │        │
+│  │   (Playwright)   │              │   (REST API)     │        │
+│  │                  │              │                  │        │
+│  │  • Page Objects  │              │  • API Client    │        │
+│  │  • Locators      │              │  • Fixtures      │        │
+│  │  • 15 UI Tests   │              │  • 11 API Tests  │        │
+│  └────────┬─────────┘              └─────────┬────────┘        │
+│           │                                  │                  │
+│           └──────────────┬───────────────────┘                  │
+│                          │                                      │
+│                   ┌──────▼──────┐                              │
+│                   │   Fixtures   │                              │
+│                   │   & Config   │                              │
+│                   └──────┬───────┘                              │
+│                          │                                      │
+└──────────────────────────┼──────────────────────────────────────┘
+                           │
+                           ▼
+            ┌──────────────────────────────┐
+            │  Application Under Test      │
+            │  (OpenCart 4.0.2.3)          │
+            │                              │
+            │  • Docker Containers         │
+            │  • Proxmox LXC 103          │
+            │  • Self-Hosted              │
+            └──────────────────────────────┘
 ```
 
-### **Design Patterns Implemented**
-- ✅ **Page Object Model (POM)** - Maintainable, reusable page interactions
-- ✅ **Dependency Injection** - Loose coupling via fixtures
-- ✅ **Factory Pattern** - Browser instance management
-- ✅ **Singleton Pattern** - Configuration management
-- ✅ **Strategy Pattern** - Multi-framework selector strategy
+### Infrastructure
+
+**Deployment Environment:**
+- **Proxmox VE**: Virtualization platform
+- **LXC Container**: Isolated test environment
+- **Docker Compose**: Application orchestration
+  - OpenCart (PHP 8.1 + Apache)
+  - MySQL 8.0
+
+**Benefits:**
+- ✅ Complete control over test environment
+- ✅ Consistent, reproducible setup
+- ✅ No external dependencies
+- ✅ Easy scaling and maintenance
+
+---
+
+## ✨ Features
+
+### Frontend Testing (Playwright)
+- **Page Object Model** architecture
+- **Shared locators** between frameworks
+- **Comprehensive coverage**:
+  - Homepage navigation and search
+  - Product catalog interactions
+  - Shopping cart functionality
+  - User authentication flows
+- **Rich reporting**: HTML reports with screenshots and video recordings
+- **Cross-browser support**: Chromium, Firefox, WebKit
+
+### Backend Testing (REST API)
+- **Session-based authentication**
+- **OpenCart API integration**:
+  - Cart operations (add, remove, update)
+  - Product management
+  - Order processing
+- **Comprehensive test coverage**:
+  - Happy paths
+  - Edge cases
+  - Error handling
+- **Reusable API client** with logging and assertions
+
+### Quality Practices
+- ✅ **Clean Architecture**: Separation of concerns, DRY principles
+- ✅ **Type Hints**: Enhanced IDE support and code clarity
+- ✅ **Logging**: Comprehensive debug and info logging
+- ✅ **Error Handling**: Graceful failures with clear messages
+- ✅ **Documentation**: Inline comments and comprehensive README
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Category | Technology | Purpose |
+| Category | Technology | Version |
 |----------|-----------|---------|
-| **Language** | Python 3.11 | Modern async/await support |
-| **Automation** | Playwright | Fast, reliable browser automation |
-| **Test Framework** | pytest | Powerful fixtures and parametrization |
-| **Infrastructure** | Proxmox VE | Enterprise virtualization platform |
-| **Target App** | OpenCart | E-commerce test environment |
-| **Containerization** | Docker & LXC | Lightweight, scalable deployments |
-| **CI/CD** | Jenkins *(planned)* | Automated test execution |
+| **Language** | Python | 3.11+ |
+| **UI Testing** | Playwright | 1.57+ |
+| **API Testing** | Requests | 2.32+ |
+| **Test Framework** | pytest | 9.0+ |
+| **Reporting** | pytest-html | 4.2+ |
+| **Config Management** | PyYAML | 6.0+ |
+| **Application** | OpenCart | 4.0.2.3 |
+| **Database** | MySQL | 8.0 |
+| **Container** | Docker | Latest |
+| **Virtualization** | Proxmox VE | Latest |
 
 ---
 
-## 🌐 Infrastructure
+## 📁 Project Structure
 
-### **Proxmox Self-Hosted Cloud**
 ```
-Proxmox Server (192.168.50.15)
-├── LXC 103: OpenCart (192.168.50.103)
-│   ├── Docker: Web Server
-│   ├── Docker: MySQL Database
-│   └── Auto-start: Enabled
-│
-└── VM/LXC: Jenkins CI/CD (planned)
-    └── Automated test triggers
+automation-framework/
+├── config/                    # Configuration files
+│   └── config.yaml           # Application settings
+├── locators/                  # Shared element locators
+│   ├── __init__.py
+│   ├── home_locators.py
+│   └── login_locators.py
+├── pages/                     # Page Object classes
+│   ├── __init__.py
+│   └── pw/                   # Playwright pages
+│       ├── __init__.py
+│       ├── base_page.py      # Base page with common methods
+│       ├── home_page.py
+│       └── login_page.py
+├── tests/                     # Test suites
+│   ├── backend/              # API tests
+│   │   ├── __init__.py
+│   │   └── api/
+│   │       ├── __init__.py
+│   │       ├── conftest.py   # API fixtures
+│   │       └── test_cart_api.py
+│   └── frontend/             # UI tests
+│       ├── __init__.py
+│       └── pw/               # Playwright tests
+│           ├── __init__.py
+│           ├── conftest.py   # UI fixtures
+│           ├── test_homepage.py
+│           └── test_login.py
+├── utils/                     # Utility modules
+│   ├── __init__.py
+│   ├── api/
+│   │   ├── __init__.py
+│   │   └── opencart_api_client.py  # API client
+│   └── config_reader.py      # Config loader
+├── reports/                   # Test reports (generated)
+│   └── screenshots/          # Failure screenshots
+├── .gitignore                # Git ignore rules
+├── pytest.ini                # pytest configuration
+├── requirements.txt          # Python dependencies
+├── README.md                 # This file
+├── ARCHITECTURE.md           # Detailed architecture docs
+└── LICENSE                   # MIT License
 ```
-
-**Infrastructure Highlights:**
-- 🖥️ **Resources:** 31GB RAM, 16 CPU cores, 2.27TB storage
-- 🔒 **Network Isolation:** Separate test environment
-- 🔄 **Auto-Recovery:** Containers auto-start after host reboot
-- 📦 **Container-Based:** Fast provisioning and tear-down
 
 ---
 
-## ⚡ Quick Start
+## 🚀 Quick Start
 
-### **Prerequisites**
+### Prerequisites
+
+- Python 3.11 or higher
+- Git
+- Virtual environment tool (venv)
+
+### Installation
+
 ```bash
-Python 3.11+
-Node.js 18+ (for Playwright)
-Git
-```
+# Clone repository
+git clone https://github.com/your-username/automation-framework.git
+cd automation-framework
 
-### **Installation**
-
-```bash
-# Clone the repository
-git clone https://github.com/nipunkx/smart-qa-framework.git
-cd smart-qa-framework
-
-# Create and activate virtual environment
-python3.11 -m venv venv
+# Create virtual environment
+python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Install Playwright browsers
-playwright install chromium firefox webkit
+playwright install chromium
 ```
 
-### **Configuration**
+### Configuration
 
-Update `config/config.yaml` with your test environment:
+Update `config/config.yaml` with your environment details:
 
 ```yaml
-opencart:
-  base_url: "http://your-opencart-url"
-  admin_url: "http://your-opencart-url/admin"
+application:
+  base_url: "http://your-opencart-url:8080"
+  
+timeouts:
+  default: 30
+  
+api:
+  username: "your_api_username"
+  key: "your_api_key"
 ```
 
 ---
 
-## 🧪 Running Tests
+## 🧪 Test Execution
 
-### **Basic Execution**
+### Run All Tests
 
 ```bash
-# Run all tests (headless mode)
-pytest tests/frontend/playwright/ -v
+# All tests
+pytest -v
 
-# Run with browser visible (headed mode)
-pytest tests/frontend/playwright/ -v --headed
+# Frontend tests only
+pytest tests/frontend/pw/ -v
 
-# Run specific test file
-pytest tests/frontend/playwright/test_login.py -v
+# Backend tests only
+pytest tests/backend/api/ -v
 ```
 
-### **Advanced Options**
+### Run Specific Test Files
 
 ```bash
-# Run smoke tests only
-pytest tests/frontend/playwright/ -v -m smoke
+# Homepage tests
+pytest tests/frontend/pw/test_homepage.py -v
 
-# Run with specific browser
-pytest tests/frontend/playwright/ -v --browser firefox
-
-# Parallel execution (requires pytest-xdist)
-pytest tests/frontend/playwright/ -v -n 4
-
-# Generate HTML report
-pytest tests/frontend/playwright/ -v --html=reports/report_$(date +%Y%m%d_%H%M%S).html
+# Cart API tests
+pytest tests/backend/api/test_cart_api.py -v
 ```
 
-### **Test Markers**
+### Run with Markers
 
-```python
-@pytest.mark.smoke     # Critical path tests
-@pytest.mark.regression  # Full test suite
-@pytest.mark.slow      # Long-running tests
+```bash
+# Smoke tests only
+pytest -m smoke -v
+
+# Critical path tests
+pytest -m critical -v
+```
+
+### Generate HTML Report
+
+```bash
+pytest -v --html=reports/report.html --self-contained-html
+```
+
+### Parallel Execution
+
+```bash
+# Run tests in parallel (4 workers)
+pytest -n 4 -v
+```
+
+### Debug Mode
+
+```bash
+# Run with live logs
+pytest -v -s --log-cli-level=DEBUG
+
+# Run single test with full output
+pytest tests/frontend/pw/test_homepage.py::TestHomepage::test_homepage_loads -v -s
 ```
 
 ---
 
-## 📊 Test Reports & Artifacts
+## 📊 Test Reports
 
-### **Generated Artifacts**
-- 📄 **HTML Reports** - `reports/html/report_YYYYMMDD_HHMMSS.html`
-- 📸 **Screenshots** - Auto-captured on test failure
-- 🎥 **Videos** - Full test execution recording
-- 📝 **Logs** - Detailed execution logs
+### HTML Reports
 
-### **Report Features**
-- Timestamped execution history
-- Failure screenshot embedding
-- Video playback integration
-- Test duration metrics
-- Environment details
+After test execution, open `reports/report.html` in a browser to see:
+- ✅ Test results summary
+- ✅ Pass/fail status
+- ✅ Execution time
+- ✅ Screenshots (on failure)
+- ✅ Video recordings
 
----
+### Screenshots
 
-## 🎯 Test Coverage
+Failure screenshots are automatically saved to `reports/screenshots/`:
+- Named by test: `test_name_failure.png`
+- Captured at moment of failure
+- Included in HTML report
 
-| **Module** | **Test Cases** | **Status** | **Coverage** |
-|------------|----------------|------------|--------------|
-| Homepage | 7 | ✅ Passing | Navigation, Search, Links |
-| User Login | 9 | ✅ Passing | Valid/Invalid credentials, Validation |
-| **Total** | **16** | ✅ **100%** | **Core Flows** |
+### Videos
 
-### **Upcoming Test Modules**
-- [ ] Product Catalog (Browse, Filter, Sort)
-- [ ] Shopping Cart (Add, Update, Remove)
-- [ ] Checkout Flow (Guest, Registered User)
-- [ ] API Testing (REST endpoints)
-- [ ] Performance Testing (Load, Stress)
+Playwright videos saved to `reports/videos/`:
+- Full test execution recording
+- Only for failed tests (configurable)
 
 ---
 
-## 🚀 Roadmap
+## 🔄 CI/CD Integration
 
-### **Phase 1: Foundation** ✅ *Completed*
-- [x] Proxmox infrastructure setup
-- [x] OpenCart deployment in Docker
-- [x] Playwright framework implementation
-- [x] Page Object Model architecture
-- [x] Shared locators design
-- [x] HTML reporting with screenshots/videos
+### Future: GitHub Actions (Planned)
 
-### **Phase 2: Expansion** 🚧 *In Progress*
-- [ ] Selenium integration (cross-browser support)
-- [ ] REST API testing suite
-- [ ] Test data management (fixtures, factories)
-- [ ] GitHub Actions CI/CD pipeline
+```yaml
+# .github/workflows/tests.yml
+name: Test Automation
 
-### **Phase 3: Advanced Features** 📅 *Planned*
-- [ ] Jenkins integration on Proxmox
-- [ ] Selenoid Grid for parallel execution
-- [ ] AI-powered failure analysis (Claude API)
-- [ ] Visual regression testing
-- [ ] Self-healing locators with AI
-- [ ] Performance testing integration
+on: [push, pull_request]
 
----
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - run: playwright install chromium
+      - run: pytest -v
+```
 
-## 🏢 Enterprise Features
+### Current: Self-Hosted Infrastructure
 
-### **German Market Considerations**
-- ✅ **GDPR Compliance** - Self-hosted infrastructure, data sovereignty
-- ✅ **European Deployment** - Can be deployed on German/EU cloud providers
-- ✅ **Multilingual Support Ready** - Framework structure supports i18n testing
-- ✅ **Enterprise Scalability** - Proxmox clustering support for growth
-
-### **DevOps Best Practices**
-- Infrastructure as Code (IaC) ready
-- Container orchestration capabilities
-- Automated environment provisioning
-- Blue-green deployment testing support
+Tests run against self-hosted OpenCart instance:
+- No external service dependencies
+- Complete environment control
+- Consistent test data
 
 ---
 
-## 🔒 Security & Compliance
+## 🎓 Key Learning Demonstrations
 
-- **Credentials:** Stored in `config.yaml` (git-ignored)
-- **Secrets Management:** Environment variables for CI/CD
-- **Network Isolation:** Proxmox VLAN segmentation
-- **Access Control:** Role-based test environment access
+This framework showcases:
 
----
+1. **Full-Stack Testing**
+   - Frontend: UI interactions, navigation, form submissions
+   - Backend: API authentication, CRUD operations, data validation
 
-## 📈 Performance
+2. **Clean Architecture**
+   - Page Object Model for UI
+   - API client abstraction
+   - Shared components and DRY principles
 
-| Metric | Value |
-|--------|-------|
-| **Avg Test Duration** | 2-5 seconds |
-| **Parallel Execution** | Ready (pytest-xdist) |
-| **Browser Startup** | < 1 second |
-| **Report Generation** | < 2 seconds |
+3. **Professional Development Practices**
+   - Version control (Git)
+   - Virtual environments
+   - Dependency management
+   - Comprehensive documentation
+
+4. **Test Design Patterns**
+   - Fixtures for test setup/teardown
+   - Parameterized tests
+   - Test markers for organization
+   - Independent test isolation
+
+5. **DevOps Knowledge**
+   - Docker containerization
+   - Proxmox virtualization
+   - Self-hosted infrastructure
+   - Environment configuration
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these guidelines:
+Contributions welcome! Please:
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📞 Contact & Professional Profile
-
-**Nipun Xavier**  
-*Senior QA Automation Engineer | 17+ Years Experience*
-
-- 📧 Email: nipunkx@gmail.com
-- 💼 LinkedIn: [linkedin.com/in/nipun-xavier](https://linkedin.com/in/nipun-xavier)
-- 🐙 GitHub: [@nipunkx](https://github.com/nipunkx)
-- 🌍 Location: Pursuing opportunities in US/Canada/Germany/Australia
-
-**Areas of Expertise:**
-- Test Automation Architecture
-- CI/CD Pipeline Design
-- Cloud Infrastructure (Proxmox, AWS, Azure)
-- DevOps Practices
-- Agile/Scrum Methodologies
+2. Create a feature branch
+3. Make your changes
+4. Add tests for new features
+5. Update documentation
+6. Submit a pull request
 
 ---
 
@@ -314,24 +405,38 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🙏 Acknowledgments
+## 👤 Author
 
-- OpenCart team for the excellent e-commerce platform
-- Playwright team for the modern automation framework
-- Proxmox community for the powerful virtualization platform
-- Python testing community for pytest excellence
+**Pat Xavier** - Senior QA Automation Engineer
 
----
-
-## 📚 Additional Resources
-
-- [Playwright Documentation](https://playwright.dev/python/)
-- [pytest Documentation](https://docs.pytest.org/)
-- [Page Object Model Pattern](https://playwright.dev/python/docs/pom)
-- [Proxmox VE Documentation](https://pve.proxmox.com/wiki/Main_Page)
+- **Experience**: 17+ years in software testing and automation
+- **Expertise**: Full-stack test automation, DevOps, CI/CD
+- **Focus**: German tech market positioning
 
 ---
 
-**⭐ If you find this project helpful, please consider giving it a star!**
+## 📞 Contact & Links
 
-*Built with ❤️ for the German Tech Community*
+- **GitHub**: [Your GitHub Profile]
+- **LinkedIn**: [Your LinkedIn Profile]
+- **Email**: your.email@example.com
+
+---
+
+## 🎯 Project Goals
+
+This framework was built to demonstrate:
+
+✅ **Enterprise-level automation skills** for senior QA roles  
+✅ **Full-stack testing capabilities** (UI + API)  
+✅ **Clean, maintainable code** following best practices  
+✅ **Self-hosted infrastructure** knowledge  
+✅ **Professional documentation** and communication
+
+**Target Audience**: German tech companies seeking senior test automation engineers with comprehensive skill sets.
+
+---
+
+**Last Updated**: January 27, 2026  
+**Status**: Active Development ✅  
+**Test Coverage**: 26 tests, 100% passing 🎉
