@@ -70,3 +70,13 @@ proxmox:
   host: "192.168.50.15"
   node: "proxmox-ve"
   # Don't put password here! We'll use environment variables
+
+# Opencart API configuration
+api:
+  username: "TestAPIUser"
+  key: "this_is_the_api_key_for_local_opencart_on_the_automation_project"
+  endpoints:
+    login: "/index.php?route=api/account/login"
+    cart: "/index.php?route=api/sale/cart"
+    cart_add: "/index.php?route=api/sale/cart.add"
+    order: "/index.php?route=api/sale/order"
