@@ -6,22 +6,53 @@ __pycache__/
 *.so
 .Python
 .env
+*.egg-info/
+dist/
+build/
 
 # Testing
 .pytest_cache/
 reports/
 htmlcov/
 .coverage
+.coverage.*
+*.html
+pytest_debug.log
+
+# Screenshots and Videos (generated during test runs)
+screenshots/
+videos/
+traces/
+
+# Playwright
+playwright-report/
+test-results/
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
 
 # OS
 .DS_Store
 Thumbs.db
+*.bak
 
 # Logs
 *.log
+logs/
+
+# Backups
+.backups/
+*.backup
+
+# Temporary files
+*.tmp
+*.temp
+~*
+
+# Environment variables
+.env.local
+.env.*.local

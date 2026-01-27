@@ -29,7 +29,7 @@ class TestLoginPage:
         """
         home_page.click_login()
         
-        assert "login" in home_page.get_url().lower()
+        assert "login" in home_page.get_current_url().lower()
 
 
 @pytest.mark.smoke

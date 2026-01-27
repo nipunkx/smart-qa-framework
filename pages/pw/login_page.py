@@ -12,6 +12,14 @@ class LoginPage(BasePage):
     """OpenCart Login Page Object"""
     
     # ============== ACTIONS ==============
+
+    def navigate(self, path: str = "") -> None:
+        """
+        Navigate to login page
+        Override base navigate to go to login URL
+        """
+        login_path = "/index.php?route=account/login"
+        super().navigate(login_path)
     
     def login(self, email: str, password: str) -> None:
         """Perform login with credentials"""
