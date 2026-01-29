@@ -55,17 +55,31 @@ pipeline {
             }
         }
         
-        stage('Run UI Tests') {
+        stage('Run Playwright UI Tests') {
             steps {
-                echo '🖥️ Running Frontend UI Tests...'
+                echo '🖥️ Running Playwright UI Tests (Headless)...'
                 sh '''
                     . venv/bin/activate
                     pytest tests/frontend/pw/ -v \
-                        --html=reports/ui_report.html \
+                        --html=reports/playwright_report.html \
                         --self-contained-html \
-                        --junit-xml=reports/ui_results.xml \
+                        --junit-xml=reports/playwright_results.xml \
                         --screenshot=only-on-failure \
                         --video=retain-on-failure \
+                        || true
+                '''
+            }
+        }
+
+        stage('Run Selenium Tests on Selenoid') {
+            steps {
+                echo '🚀 Running Selenium Tests on Selenoid...'
+                sh '''
+                    . venv/bin/activate
+                    pytest tests/frontend/sel/ -v \
+                        --html=reports/selenium_report.html \
+                        --self-contained-html \
+                        --junit-xml=reports/selenium_results.xml \
                         || true
                 '''
             }
@@ -79,9 +93,9 @@ pipeline {
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
                     reportDir: 'reports',
-                    reportFiles: 'api_report.html, ui_report.html',
+                    reportFiles: 'api_report.html, playwright_report.html, selenium_report.html',
                     reportName: 'Test Reports',
-                    reportTitles: 'API Tests, UI Tests'
+                    reportTitles: 'API Tests, Playwright Tests, Selenium Tests'
                 ])
             }
         }
@@ -91,6 +105,29 @@ pipeline {
                 echo '💾 Archiving test artifacts...'
                 archiveArtifacts artifacts: 'reports/**/*', allowEmptyArchive: true
                 junit testResults: 'reports/*.xml', allowEmptyResults: true
+            }
+        }
+
+        stage('Run Selenium Tests on Selenoid') {
+        steps {
+            echo '🚀 Running Selenium Tests on Selenoid...'
+            sh '''
+                . venv/bin/activate
+                pytest tests/frontend/sel/ -v \
+                    --html=reports/selenium_report.html \
+                    --self-contained-html \
+                    --junit-xml=reports/selenium_results.xml \
+                    || true
+            '''
+            }
+        }
+
+        stage('Verify Selenoid Connection') {
+        steps {
+            echo '🔌 Verifying Selenoid is accessible...'
+            sh '''
+                curl -f http://192.168.50.106:4444/status || echo "Warning: Selenoid not accessible"
+            '''
             }
         }
     }
