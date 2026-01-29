@@ -41,17 +41,6 @@ pipeline {
             }
         }
         
-        stage('Install Playwright Browsers') {
-            steps {
-                echo '🌐 Installing Playwright browsers...'
-                sh '''
-                    . venv/bin/activate
-                    playwright install chromium
-                    playwright install-deps chromium
-                '''
-            }
-        }
-        
         stage('Run API Tests') {
             steps {
                 echo '🔌 Running Backend API Tests...'
