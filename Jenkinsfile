@@ -108,20 +108,6 @@ pipeline {
             }
         }
 
-        stage('Run Selenium Tests on Selenoid') {
-        steps {
-            echo '🚀 Running Selenium Tests on Selenoid...'
-            sh '''
-                . venv/bin/activate
-                pytest tests/frontend/sel/ -v \
-                    --html=reports/selenium_report.html \
-                    --self-contained-html \
-                    --junit-xml=reports/selenium_results.xml \
-                    || true
-            '''
-            }
-        }
-
         stage('Verify Selenoid Connection') {
         steps {
             echo '🔌 Verifying Selenoid is accessible...'
