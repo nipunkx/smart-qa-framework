@@ -33,7 +33,7 @@ def playwright_instance():
 def browser(playwright_instance):
     """Launch browser for the session"""
     browser = playwright_instance.chromium.launch(
-        headless=False,
+        headless=True,
         slow_mo=500
     )
     yield browser
