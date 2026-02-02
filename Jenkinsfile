@@ -36,7 +36,26 @@ pipeline {
                 sh '''
                     . venv/bin/activate
                     pip install -r requirements.txt
-                    pip list
+                    pip list | grep -E "selenium|playwright|pytest|allure"
+                '''
+            }
+        }
+        
+        stage('Install Playwright Browsers') {
+            steps {
+                echo '🌐 Installing Playwright browsers...'
+                sh '''
+                    . venv/bin/activate
+                    playwright install chromium
+                '''
+            }
+        }
+        
+        stage('Verify Selenoid Connection') {
+            steps {
+                echo '🔌 Verifying Selenoid is accessible...'
+                sh '''
+                    curl -f http://192.168.50.106:4444/status || echo "Warning: Selenoid not accessible"
                 '''
             }
         }
@@ -50,6 +69,7 @@ pipeline {
                         --html=reports/api_report.html \
                         --self-contained-html \
                         --junit-xml=reports/api_results.xml \
+                        --alluredir=allure-results \
                         || true
                 '''
             }
@@ -64,28 +84,44 @@ pipeline {
                         --html=reports/playwright_report.html \
                         --self-contained-html \
                         --junit-xml=reports/playwright_results.xml \
+                        --alluredir=allure-results \
                         --screenshot=only-on-failure \
                         --video=retain-on-failure \
                         || true
                 '''
             }
         }
-
+        
         stage('Run Selenium Tests on Selenoid') {
             steps {
-                echo '🚀 Running Selenium Tests on Selenoid...'
+                echo '🚀 Running Selenium Tests on Selenoid (Parallel)...'
                 sh '''
                     . venv/bin/activate
                     pytest tests/frontend/sel/ -v \
+                        -n 3 \
                         --html=reports/selenium_report.html \
                         --self-contained-html \
                         --junit-xml=reports/selenium_results.xml \
+                        --alluredir=allure-results \
                         || true
                 '''
             }
         }
         
-        stage('Publish Reports') {
+        stage('Generate Allure Report') {
+            steps {
+                echo '📊 Generating Allure Report...'
+                script {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        results: [[path: 'allure-results']]
+                    ])
+                }
+            }
+        }
+        
+        stage('Publish HTML Reports') {
             steps {
                 echo '📊 Publishing HTML reports...'
                 publishHTML([
@@ -107,15 +143,6 @@ pipeline {
                 junit testResults: 'reports/*.xml', allowEmptyResults: true
             }
         }
-
-        stage('Verify Selenoid Connection') {
-        steps {
-            echo '🔌 Verifying Selenoid is accessible...'
-            sh '''
-                curl -f http://192.168.50.106:4444/status || echo "Warning: Selenoid not accessible"
-            '''
-            }
-        }
     }
     
     post {
@@ -125,6 +152,11 @@ pipeline {
         }
         success {
             echo '✅ Pipeline completed successfully!'
+            echo '📊 Tests Summary:'
+            echo '   - API Tests: Backend endpoints'
+            echo '   - Playwright Tests: Fast headless UI tests'
+            echo '   - Selenium Tests: Real browsers on Selenoid (3 parallel workers)'
+            echo '   - Allure Report: Enterprise-grade test reporting'
         }
         failure {
             echo '❌ Pipeline failed!'

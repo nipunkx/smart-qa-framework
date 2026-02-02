@@ -56,3 +56,6 @@ logs/
 # Environment variables
 .env.local
 .env.*.local
+# Allure reports
+allure-results/
+allure-report/

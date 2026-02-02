@@ -2,6 +2,7 @@ Jinja2==3.1.6
 MarkupSafe==3.0.3
 PyYAML==6.0.3
 Pygments==2.19.2
+allure-pytest==2.13.5
 certifi==2026.1.4
 charset-normalizer==3.4.4
 execnet==2.1.2
