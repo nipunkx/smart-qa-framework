@@ -36,3 +36,9 @@ selenoid:
         sessionTimeout: "5m"
   video_dir: "/opt/selenoid/video"
   log_dir: "/opt/selenoid/logs"
+
+# AI Analysis Configuration
+ai:
+  enabled: true
+  ollama_host: "http://192.168.50.105:11434"
+  model: "tinyllama"
